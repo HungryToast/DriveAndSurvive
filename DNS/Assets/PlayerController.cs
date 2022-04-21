@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+//Code adapted from "3rd Person Controller - Unity's New Input System" by One Wheel Studio found at "https://www.youtube.com/watch?v=WIl6ysorTE0"
+
     [Header("Input Field")] [SerializeField]
     private Inputs inputsAsset;
     [SerializeField] private InputAction move;
@@ -44,8 +46,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCam) *movementForce;
-        forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCam)* movementForce;
+        forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce;
+        forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam)* movementForce;
         
         rb.AddForce(forceDirection,ForceMode.Impulse);
         forceDirection = Vector3.zero;
@@ -64,7 +66,27 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
         }
+        
+        LookAt();
     }
+
+    private void LookAt()
+    {
+        Vector3 dir = rb.velocity;
+        dir.y = 0;
+        
+        if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && dir.sqrMagnitude > 0.1f)
+        {
+            this.rb.rotation = Quaternion.LookRotation(dir,Vector3.up);
+        }
+        else
+        {
+            rb.angularVelocity = Vector3.zero;
+        }
+
+    }
+
+
 
     private Vector3 GetCameraRight(Camera playerCamera)
     {
