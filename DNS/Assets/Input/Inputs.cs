@@ -200,7 +200,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
             ""id"": ""45d93604-d108-4b0c-a2c4-2657cc83fa90"",
             ""actions"": [
                 {
-                    ""name"": ""Drve"",
+                    ""name"": ""Drive"",
                     ""type"": ""PassThrough"",
                     ""id"": ""5ca5da2f-6604-4fba-9d9a-825673e669ee"",
                     ""expectedControlType"": ""Vector2"",
@@ -235,7 +235,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drve"",
+                    ""action"": ""Drive"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -246,7 +246,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drve"",
+                    ""action"": ""Drive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -257,7 +257,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drve"",
+                    ""action"": ""Drive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -268,7 +268,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drve"",
+                    ""action"": ""Drive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -279,7 +279,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drve"",
+                    ""action"": ""Drive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -320,7 +320,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         // Car
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
-        m_Car_Drve = m_Car.FindAction("Drve", throwIfNotFound: true);
+        m_Car_Drive = m_Car.FindAction("Drive", throwIfNotFound: true);
         m_Car_Break = m_Car.FindAction("Break", throwIfNotFound: true);
         m_Car_Exit = m_Car.FindAction("Exit", throwIfNotFound: true);
     }
@@ -455,14 +455,14 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     // Car
     private readonly InputActionMap m_Car;
     private ICarActions m_CarActionsCallbackInterface;
-    private readonly InputAction m_Car_Drve;
+    private readonly InputAction m_Car_Drive;
     private readonly InputAction m_Car_Break;
     private readonly InputAction m_Car_Exit;
     public struct CarActions
     {
         private @Inputs m_Wrapper;
         public CarActions(@Inputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Drve => m_Wrapper.m_Car_Drve;
+        public InputAction @Drive => m_Wrapper.m_Car_Drive;
         public InputAction @Break => m_Wrapper.m_Car_Break;
         public InputAction @Exit => m_Wrapper.m_Car_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Car; }
@@ -474,9 +474,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_CarActionsCallbackInterface != null)
             {
-                @Drve.started -= m_Wrapper.m_CarActionsCallbackInterface.OnDrve;
-                @Drve.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnDrve;
-                @Drve.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnDrve;
+                @Drive.started -= m_Wrapper.m_CarActionsCallbackInterface.OnDrive;
+                @Drive.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnDrive;
+                @Drive.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnDrive;
                 @Break.started -= m_Wrapper.m_CarActionsCallbackInterface.OnBreak;
                 @Break.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnBreak;
                 @Break.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnBreak;
@@ -487,9 +487,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
             m_Wrapper.m_CarActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Drve.started += instance.OnDrve;
-                @Drve.performed += instance.OnDrve;
-                @Drve.canceled += instance.OnDrve;
+                @Drive.started += instance.OnDrive;
+                @Drive.performed += instance.OnDrive;
+                @Drive.canceled += instance.OnDrive;
                 @Break.started += instance.OnBreak;
                 @Break.performed += instance.OnBreak;
                 @Break.canceled += instance.OnBreak;
@@ -511,7 +511,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     }
     public interface ICarActions
     {
-        void OnDrve(InputAction.CallbackContext context);
+        void OnDrive(InputAction.CallbackContext context);
         void OnBreak(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
     }

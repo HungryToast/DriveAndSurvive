@@ -178,7 +178,7 @@
             "id": "45d93604-d108-4b0c-a2c4-2657cc83fa90",
             "actions": [
                 {
-                    "name": "Drve",
+                    "name": "Drive",
                     "type": "PassThrough",
                     "id": "5ca5da2f-6604-4fba-9d9a-825673e669ee",
                     "expectedControlType": "Vector2",
@@ -213,7 +213,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drve",
+                    "action": "Drive",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -224,7 +224,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drve",
+                    "action": "Drive",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -235,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drve",
+                    "action": "Drive",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -246,7 +246,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drve",
+                    "action": "Drive",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -257,7 +257,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drve",
+                    "action": "Drive",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
