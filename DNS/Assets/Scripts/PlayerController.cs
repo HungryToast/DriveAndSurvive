@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     private Inputs inputsAsset;
     [SerializeField] private InputAction move;
     [SerializeField] private InputAction run;
-
+    [SerializeField] private InputAction attack;
+    
     [Header("RigidBody")] 
     [SerializeField] private Rigidbody rb;
 
@@ -44,8 +45,16 @@ public class PlayerController : MonoBehaviour
         inputsAsset.Player.Jump.started += DoJump;
         move = inputsAsset.Player.Move;
         run = inputsAsset.Player.Run;
+        attack = inputsAsset.Player.Attack;
+        attack.started += doAttack;
         inputsAsset.Player.Enable();
     }
+
+    private void doAttack(InputAction.CallbackContext obj)
+    {
+        _animator.SetTrigger("Attacking");
+    }
+
     private void OnDisable()
     {
         inputsAsset.Player.Jump.started -= DoJump;
@@ -160,8 +169,6 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
-
-        
         
     }
     private void IsFalling()
@@ -175,6 +182,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("isFalling", true);
         }
     }
+
+    
 }
 
 

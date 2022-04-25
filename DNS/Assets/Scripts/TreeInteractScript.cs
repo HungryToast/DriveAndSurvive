@@ -7,54 +7,21 @@ using UnityEngine.InputSystem;
 
 public class TreeInteractScript : MonoBehaviour
 {
-    [SerializeField]private Inventory playerInventory;
-    [SerializeField]private Inputs playerInputs;
-    [SerializeField]private Animator _animator;
-    [SerializeField] private AnimationClip chopAnimation;
-    [SerializeField]private GameObject player;
-    [SerializeField] private int woodGain;
-    [SerializeField] private InputAction chop;
+    [SerializeField] int hP; 
+    [SerializeField] int woodGain;
 
-    private bool inRange;
+    [SerializeField] GameObject player;
     
     private void Awake()
     {
-        playerInputs = new Inputs();
-        _animator = player.GetComponent<Animator>();
-        
+        hP = 5;
+        player = GameObject.FindWithTag("Player");
     }
 
-    private void OnEnable()
+    public int ReduceHP()
     {
-        playerInputs.Player.Interact.started += ChopWood;
+        return hP--;
     }
-
-    private void ChopWood(InputAction.CallbackContext obj)
-    {
-       if(inRange) {
-            _animator.SetTrigger("ChopTree");
-            playerInventory.SetWood(woodGain);
-            Destroy(this);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            inRange = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            inRange = false;
-        }
-    }
-
-  
-
+    
     
 }
