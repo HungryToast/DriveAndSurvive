@@ -144,7 +144,6 @@ public class PlayerController : MonoBehaviour
         {
             forceDirection += Vector3.up * jumpForce;
             _animator.SetTrigger("Jump");
-            
         }
     }
 
