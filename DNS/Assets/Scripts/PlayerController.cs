@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Animator")] [SerializeField] private Animator _animator;
 
-    private bool hasJumped;
+   
 
 
     private void Awake()
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         inputsAsset = new Inputs();
         _animator = this.GetComponent<Animator>();
-        hasJumped = false;
+        
     }
 
     private void OnEnable()
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
         {
             forceDirection += Vector3.up * jumpForce;
             _animator.SetTrigger("Jump");
-            hasJumped = true;
+            
         }
     }
 
@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 0.3f))
         {
-            hasJumped = false;
+            
             return true;
         }
         else
