@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [Header("Input Field")] [SerializeField]
     private Inputs inputsAsset;
     [SerializeField] private InputAction move;
+    [SerializeField] private InputAction run;
 
     [Header("RigidBody")] 
     [SerializeField] private Rigidbody rb;
@@ -25,17 +26,24 @@ public class PlayerController : MonoBehaviour
     [Header("Camera")]
     [SerializeField]private Camera playerCam;
 
+    [Header("Animator")] [SerializeField] private Animator _animator;
+
+    private bool hasJumped;
+
 
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
         inputsAsset = new Inputs();
+        _animator = this.GetComponent<Animator>();
+        hasJumped = false;
     }
 
     private void OnEnable()
     {
         inputsAsset.Player.Jump.started += DoJump;
         move = inputsAsset.Player.Move;
+        run = inputsAsset.Player.Run;
         inputsAsset.Player.Enable();
     }
     private void OnDisable()
@@ -46,12 +54,35 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce;
-        forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam)* movementForce;
+        if (run.IsPressed())
+        {
+            _animator.SetBool("isRunning",true);
+            forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce * 2f;
+            forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam) * movementForce* 2f;
+        }
+        else 
+        {
+            _animator.SetBool("isRunning",false);
+            forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce;
+            forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam)* movementForce;    
+        }
+        
+        
         
         rb.AddForce(forceDirection,ForceMode.Impulse);
         forceDirection = Vector3.zero;
 
+        
+        if (move.IsPressed())
+        {
+            _animator.SetBool("isWalking",true);
+        }
+        else
+        {
+            _animator.SetBool("isWalking",false);
+        }
+
+        
         //fall faster to reduce "floating" effect
         if (rb.velocity.y < 0)
         {
@@ -67,6 +98,11 @@ public class PlayerController : MonoBehaviour
             rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
         }
         
+        //stop animator from jumping
+
+
+        IsFalling();
+
         LookAt();
     }
 
@@ -107,6 +143,8 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded())
         {
             forceDirection += Vector3.up * jumpForce;
+            _animator.SetTrigger("Jump");
+            hasJumped = true;
         }
     }
 
@@ -116,9 +154,27 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 0.3f))
         {
+            hasJumped = false;
             return true;
         }
-        else return false;
+        else
+        {
+            return false;
+        }
+
+        
+        
+    }
+    private void IsFalling()
+    {
+        if (IsGrounded())
+        {
+            _animator.SetBool("isFalling", false);
+        }
+        else
+        {
+            _animator.SetBool("isFalling", true);
+        }
     }
 }
 
