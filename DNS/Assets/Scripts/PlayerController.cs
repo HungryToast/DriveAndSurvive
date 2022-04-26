@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputAction move;
     [SerializeField] private InputAction run;
     [SerializeField] private InputAction attack;
-    
+
     [Header("RigidBody")] 
     [SerializeField] private Rigidbody rb;
 
@@ -27,7 +27,11 @@ public class PlayerController : MonoBehaviour
     [Header("Camera")]
     [SerializeField]private Camera playerCam;
 
-    [Header("Animator")] [SerializeField] private Animator _animator;
+    [Header("Animator")] 
+    [SerializeField] private Animator _animator;
+    [SerializeField] private AnimationClip attackAnimation;
+
+    [SerializeField] private bool canMove;
 
    
 
@@ -37,23 +41,24 @@ public class PlayerController : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         inputsAsset = new Inputs();
         _animator = this.GetComponent<Animator>();
-        
+        canMove = true;
+
     }
 
     private void OnEnable()
     {
         inputsAsset.Player.Jump.started += DoJump;
+        inputsAsset.Player.Attack.started += DoAttack;
         move = inputsAsset.Player.Move;
         run = inputsAsset.Player.Run;
-        attack = inputsAsset.Player.Attack;
-        attack.started += doAttack;
         inputsAsset.Player.Enable();
     }
 
-    private void doAttack(InputAction.CallbackContext obj)
+    private void DoAttack(InputAction.CallbackContext obj)
     {
         _animator.SetTrigger("Attacking");
     }
+
 
     private void OnDisable()
     {
@@ -63,13 +68,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (run.IsPressed())
+        if (run.IsPressed() && canMove && move.IsPressed())
         {
             _animator.SetBool("isRunning",true);
             forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce * 2f;
             forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam) * movementForce* 2f;
         }
-        else 
+        else if(canMove)
         {
             _animator.SetBool("isRunning",false);
             forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce;
@@ -149,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private void DoJump(InputAction.CallbackContext context)
     {
-        if (IsGrounded())
+        if (IsGrounded() && canMove)
         {
             forceDirection += Vector3.up * jumpForce;
             _animator.SetTrigger("Jump");
@@ -183,7 +188,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
+    }
+
 }
 
 

@@ -77,7 +77,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""55e67757-6798-4f85-bcb5-28dd90d6e55a"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
