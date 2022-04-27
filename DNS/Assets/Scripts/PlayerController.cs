@@ -1,203 +1,226 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.InputSystem;
+    using Object = System.Object;
 
-public class PlayerController : MonoBehaviour
-{
-//Code adapted from "3rd Person Controller - Unity's New Input System" by One Wheel Studio found at "https://www.youtube.com/watch?v=WIl6ysorTE0"
-
-    [Header("Input Field")] [SerializeField]
-    private Inputs inputsAsset;
-    [SerializeField] private InputAction move;
-    [SerializeField] private InputAction run;
-    [SerializeField] private InputAction attack;
-
-    [Header("RigidBody")] 
-    [SerializeField] private Rigidbody rb;
-
-    [Header("Forces & Speed")] [SerializeField]
-    private float movementForce;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float maxSpeed;
-    private Vector3 forceDirection = Vector3.zero;
-
-    
-    [Header("Camera")]
-    [SerializeField]private Camera playerCam;
-
-    [Header("Animator")] 
-    [SerializeField] private Animator _animator;
-    [SerializeField] private AnimationClip attackAnimation;
-
-    [SerializeField] private bool canMove;
-
-   
-
-
-    private void Awake()
+    public class PlayerController : MonoBehaviour
     {
-        rb = this.GetComponent<Rigidbody>();
-        inputsAsset = new Inputs();
-        _animator = this.GetComponent<Animator>();
-        canMove = true;
+    //Code adapted from "3rd Person Controller - Unity's New Input System" by One Wheel Studio found at "https://www.youtube.com/watch?v=WIl6ysorTE0"
 
-    }
+        [Header("Input Field")] [SerializeField]
+        private Inputs inputsAsset;
+        [SerializeField] private InputAction move;
+        [SerializeField] private InputAction run;
+        [SerializeField] private InputAction attack;
 
-    private void OnEnable()
-    {
-        inputsAsset.Player.Jump.started += DoJump;
-        inputsAsset.Player.Attack.started += DoAttack;
-        move = inputsAsset.Player.Move;
-        run = inputsAsset.Player.Run;
-        inputsAsset.Player.Enable();
-    }
+        [Header("RigidBody")] 
+        [SerializeField] private Rigidbody rb;
 
-    private void DoAttack(InputAction.CallbackContext obj)
-    {
-        _animator.SetTrigger("Attacking");
-    }
-
-
-    private void OnDisable()
-    {
-        inputsAsset.Player.Jump.started -= DoJump;
-        inputsAsset.Player.Disable();
-    }
-
-    private void FixedUpdate()
-    {
-        if (run.IsPressed() && canMove && move.IsPressed())
-        {
-            _animator.SetBool("isRunning",true);
-            forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce * 2f;
-            forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam) * movementForce* 2f;
-        }
-        else if(canMove)
-        {
-            _animator.SetBool("isRunning",false);
-            forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce;
-            forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam)* movementForce;    
-        }
-        
-        
-        
-        rb.AddForce(forceDirection,ForceMode.Impulse);
-        forceDirection = Vector3.zero;
+        [Header("Forces & Speed")] [SerializeField]
+        private float movementForce;
+        [SerializeField] private float jumpForce;
+        [SerializeField] private float maxSpeed;
+        private Vector3 forceDirection = Vector3.zero;
 
         
-        if (move.IsPressed())
-        {
-            _animator.SetBool("isWalking",true);
-        }
-        else
-        {
-            _animator.SetBool("isWalking",false);
-        }
+        [Header("Camera")]
+        [SerializeField]private Camera playerCam;
 
+        [Header("Animator")] 
+        [SerializeField] private Animator _animator;
+        [SerializeField] private AnimationClip attackAnimation;
+
+        [SerializeField] private bool canMove;
+        [SerializeField] private GameObject attackPoint;
         
-        //fall faster to reduce "floating" effect
-        if (rb.velocity.y < 0)
+
+
+
+        private void Awake()
         {
-            rb.velocity-= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
+            rb = this.GetComponent<Rigidbody>();
+            inputsAsset = new Inputs();
+            _animator = this.GetComponent<Animator>();
+            canMove = true;
+
         }
 
-        
-        //lmit horizontal velocity
-        Vector3 horizontalVelocity = rb.velocity;
-        horizontalVelocity.y = 0;
-        if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+        private void OnEnable()
         {
-            rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
-        }
-        
-        //stop animator from jumping
-
-
-        IsFalling();
-
-        LookAt();
-    }
-
-    private void LookAt()
-    {
-        Vector3 dir = rb.velocity;
-        dir.y = 0;
-        
-        if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && dir.sqrMagnitude > 0.1f)
-        {
-            this.rb.rotation = Quaternion.LookRotation(dir,Vector3.up);
-        }
-        else
-        {
-            rb.angularVelocity = Vector3.zero;
+            inputsAsset.Player.Jump.started += DoJump;
+            inputsAsset.Player.Attack.started += DoAttack;
+            move = inputsAsset.Player.Move;
+            run = inputsAsset.Player.Run;
+            inputsAsset.Player.Enable();
         }
 
-    }
-
-
-
-    private Vector3 GetCameraRight(Camera playerCamera)
-    {
-        Vector3 forward = playerCamera.transform.forward;
-        forward.y = 0;
-        return forward.normalized;
-    }
-
-    private Vector3 GetCameraForward(Camera playerCamera)
-    {
-        Vector3 right = playerCamera.transform.right;
-        right.y = 0;
-        return right.normalized;
-    }
-
-    private void DoJump(InputAction.CallbackContext context)
-    {
-        if (IsGrounded() && canMove)
+        private void DoAttack(InputAction.CallbackContext obj)
         {
-            forceDirection += Vector3.up * jumpForce;
-            _animator.SetTrigger("Jump");
-        }
-    }
-
-    private bool IsGrounded()
-    {
-        Ray ray = new Ray(this.transform.position + Vector3.up *0.25f, Vector3.down);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 0.3f))
-        {
+            _animator.SetTrigger("Attacking");
+            RaycastHit hit;
+            Vector3 point = attackPoint.transform.position;
+            Ray ray = new Ray(point, Vector3.forward);
             
-            return true;
+            if (Physics.SphereCast(ray,15f,out hit, 15f))
+            {
+                
+                GameObject targetHit = hit.transform.gameObject;
+                if (targetHit.CompareTag("Tree"))
+                {
+                    DamagableEntity tree = targetHit.GetComponent<DamagableEntity>();
+                    tree.TakeDamage(1);
+                }
+                if (targetHit.CompareTag("Animal"))
+                {
+                    DamagableEntity animal = targetHit.GetComponent<DamagableEntity>();
+                    animal.TakeDamage(UnityEngine.Random.Range(1,20));
+                }
+                
+            }
+
         }
-        else
+
+
+        private void OnDisable()
         {
-            return false;
+            inputsAsset.Player.Jump.started -= DoJump;
+            inputsAsset.Player.Disable();
+        }
+
+        private void FixedUpdate()
+        {
+            if (run.IsPressed() && canMove && move.IsPressed())
+            {
+                _animator.SetBool("isRunning",true);
+                forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce * 2f;
+                forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam) * movementForce* 2f;
+            }
+            else if(canMove)
+            {
+                _animator.SetBool("isRunning",false);
+                forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce;
+                forceDirection += move.ReadValue<Vector2>().x * GetCameraForward(playerCam)* movementForce;    
+            }
+
+
+            rb.AddForce(forceDirection,ForceMode.Impulse);
+            forceDirection = Vector3.zero;
+
+            
+            if (move.IsPressed())
+            {
+                _animator.SetBool("isWalking",true);
+            }
+            else
+            {
+                _animator.SetBool("isWalking",false);
+            }
+
+            
+            //fall faster to reduce "floating" effect
+            if (rb.velocity.y < 0)
+            {
+                rb.velocity-= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime *5;
+            }
+
+            
+            //lmit horizontal velocity
+            Vector3 horizontalVelocity = rb.velocity;
+            horizontalVelocity.y = 0;
+            if (horizontalVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+            {
+                rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
+            }
+            
+            //stop animator from jumping
+
+
+            IsFalling();
+
+            LookAt();
+        }
+
+        private void LookAt()
+        {
+            Vector3 dir = rb.velocity;
+            dir.y = 0;
+            
+            if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && dir.sqrMagnitude > 0.1f)
+            {
+                this.rb.rotation = Quaternion.LookRotation(dir,Vector3.up);
+            }
+            else
+            {
+                rb.angularVelocity = Vector3.zero;
+            }
+
+        }
+
+
+
+        private Vector3 GetCameraRight(Camera playerCamera)
+        {
+            Vector3 forward = playerCamera.transform.forward;
+            forward.y = 0;
+            return forward.normalized;
+        }
+
+        private Vector3 GetCameraForward(Camera playerCamera)
+        {
+            Vector3 right = playerCamera.transform.right;
+            right.y = 0;
+            return right.normalized;
+        }
+
+        private void DoJump(InputAction.CallbackContext context)
+        {
+            if (IsGrounded() && canMove)
+            {
+                forceDirection += Vector3.up * jumpForce;
+                _animator.SetTrigger("Jump");
+            }
+        }
+
+        private bool IsGrounded()
+        {
+            Ray ray = new Ray(this.transform.position + Vector3.up *0.25f, Vector3.down);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 0.3f))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        private void IsFalling()
+        {
+            if (IsGrounded())
+            {
+                _animator.SetBool("isFalling", false);
+            }
+            else
+            {
+                _animator.SetBool("isFalling", true);
+            }
+        }
+
+        public void EnableMovement()
+        {
+            canMove = true;
+            
+        }
+
+        public void DisableMovement()
+        {
+            canMove = false;
         }
         
+        
     }
-    private void IsFalling()
-    {
-        if (IsGrounded())
-        {
-            _animator.SetBool("isFalling", false);
-        }
-        else
-        {
-            _animator.SetBool("isFalling", true);
-        }
-    }
-
-    public void EnableMovement()
-    {
-        canMove = true;
-    }
-
-    public void DisableMovement()
-    {
-        canMove = false;
-    }
-
-}
 
 
