@@ -33,8 +33,9 @@
         [SerializeField] private AnimationClip attackAnimation;
 
         [SerializeField] private bool canMove;
-        [SerializeField] private GameObject attackPoint;
-        
+        [SerializeField] private bool canAttack;
+
+        [SerializeField] private BoxCollider attackCol;
 
 
 
@@ -44,7 +45,8 @@
             inputsAsset = new Inputs();
             _animator = this.GetComponent<Animator>();
             canMove = true;
-
+            attackCol.enabled = false;
+            canAttack = true;
         }
 
         private void OnEnable()
@@ -58,28 +60,10 @@
 
         private void DoAttack(InputAction.CallbackContext obj)
         {
-            _animator.SetTrigger("Attacking");
-            RaycastHit hit;
-            Vector3 point = attackPoint.transform.position;
-            Ray ray = new Ray(point, Vector3.forward);
-            
-            if (Physics.SphereCast(ray,15f,out hit, 15f))
-            {
-                
-                GameObject targetHit = hit.transform.gameObject;
-                if (targetHit.CompareTag("Tree"))
-                {
-                    DamagableEntity tree = targetHit.GetComponent<DamagableEntity>();
-                    tree.TakeDamage(1);
-                }
-                if (targetHit.CompareTag("Animal"))
-                {
-                    DamagableEntity animal = targetHit.GetComponent<DamagableEntity>();
-                    animal.TakeDamage(UnityEngine.Random.Range(1,20));
-                }
-                
+            if(canAttack)
+            { 
+                _animator.SetTrigger("Attacking");
             }
-
         }
 
 
@@ -212,12 +196,19 @@
         public void EnableMovement()
         {
             canMove = true;
-            
+            canAttack = true;
+        }
+
+        public void DisableAttack()
+        {
+            attackCol.enabled =false;
         }
 
         public void DisableMovement()
         {
+            attackCol.enabled = true;
             canMove = false;
+            canAttack = true;
         }
         
         

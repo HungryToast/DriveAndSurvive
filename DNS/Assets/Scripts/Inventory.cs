@@ -5,9 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class Inventory : MonoBehaviour
 {
-    private int wood;
-    private int food;
-    private float water;
+    [SerializeField] int wood;
+    [SerializeField] int food;
+    [SerializeField] float water;
 
     public int GetWood()
     {

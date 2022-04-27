@@ -30,6 +30,8 @@ public class DamagableEntity : MonoBehaviour
         {
             healthPoints = 20;
         }
+
+        inventory = FindObjectOfType<Inventory>();
     }
 
     private void OnEnable()
@@ -52,11 +54,10 @@ public class DamagableEntity : MonoBehaviour
 
     private void Update()
     {
-        
         // Kill
-        if (healthPoints == 0)
+        if (healthPoints <= 0)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
             Drop();
         }
     }
