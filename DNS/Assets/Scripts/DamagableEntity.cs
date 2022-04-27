@@ -21,12 +21,12 @@ public class DamagableEntity : MonoBehaviour
 
     private void Start()
     {
-        if (this.CompareTag("Tree"))
+        if (this.gameObject.CompareTag("Tree"));
         {
-            healthPoints = 5;
+            healthPoints = 20;
         }
 
-        if (this.CompareTag("Animal"))
+        if (this.gameObject.CompareTag("Animal"))
         {
             healthPoints = 20;
         }

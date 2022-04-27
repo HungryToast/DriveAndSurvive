@@ -12,7 +12,7 @@ public class MeleeAttack : MonoBehaviour
         if (other.CompareTag("Tree"))
         {
             var tree = other.gameObject.GetComponent<DamagableEntity>();
-            tree.TakeDamage(1);
+            tree.TakeDamage(UnityEngine.Random.Range(1,5));
         }
 
         else if (other.CompareTag("Animal"))
