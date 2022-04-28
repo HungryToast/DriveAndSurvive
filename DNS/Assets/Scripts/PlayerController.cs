@@ -33,15 +33,17 @@
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip attackAnimation;
 
-        [SerializeField] private bool canMove;
-        [SerializeField] private bool canAttack;
+        [SerializeField] private bool canMove, canAttack, canUseStamina;
 
         [SerializeField] private BoxCollider attackCol;
+        [SerializeField] private PlayerStats playerStats;
+        
 
 
 
         private void Awake()
         {
+            playerStats = GetComponent<PlayerStats>();
             rb = this.GetComponent<Rigidbody>();
             inputsAsset = new Inputs();
             _animator = this.GetComponent<Animator>();
@@ -63,6 +65,7 @@
         {
             if(canAttack)
             {
+                playerStats.DrainStamina(10f);
                 transform.rotation =Quaternion.Slerp(transform.rotation,quaternion.LookRotation(GetCameraRight(playerCam),Vector3.up), 2);
                 _animator.SetTrigger("Attacking");
             }
@@ -78,7 +81,7 @@
 
         private void FixedUpdate()
         {
-            if (run.IsPressed() && canMove && move.IsPressed())
+            if (run.IsPressed() && canMove && move.IsPressed() && canUseStamina)
             {
                 _animator.SetBool("isRunning",true);
                 forceDirection += move.ReadValue<Vector2>().y * GetCameraRight(playerCam) *movementForce * 2f;
@@ -212,8 +215,12 @@
             canMove = false;
             canAttack = false;
         }
-        
-        
+
+        public void SetCanUseStamina(bool state)
+        {
+            canUseStamina = state;
+            canAttack = state;
+        }
     }
 
 

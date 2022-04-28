@@ -370,6 +370,35 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!1 &345877689 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3662055268885825503, guid: f3e34b9506800764fb56f026e3e44361, type: 3}
+  m_PrefabInstance: {fileID: 3662055268220615156}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &345877696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345877689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf1c2e0ec490e54086845a9a5505f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stamina: 0
+  thirst: 0
+  hunger: 0
+  health: 0
+  defaultHealth: 100
+  defaultStamina: 100
+  defaultThirst: 100
+  defaultHunger: 100
+  defaultHungerDrain: 0.005
+  defaultHealthDrain: 0.005
+  playerController: {fileID: 0}
+  playerAnimator: {fileID: 0}
 --- !u!4 &462120491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8957851406450418650, guid: b2cecec96768d8b41a0d9bb507c6be0c, type: 3}
@@ -633,7 +662,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1198629437, guid: f3e34b9506800764fb56f026e3e44361, type: 3}
   m_PrefabInstance: {fileID: 3662055268220615156}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 345877689}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd10a35d97a8bc24eb60e29e26650cbd, type: 3}
@@ -1161,19 +1190,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1828230963, guid: f3e34b9506800764fb56f026e3e44361, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -2.851855e-14
+      value: 2.851855e-14
       objectReference: {fileID: 0}
     - target: {fileID: 1828230963, guid: f3e34b9506800764fb56f026e3e44361, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1.0712766e-16
+      value: -1.0712766e-16
       objectReference: {fileID: 0}
     - target: {fileID: 2095990201, guid: f3e34b9506800764fb56f026e3e44361, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000021488622
+      value: 0.0000000021488622
       objectReference: {fileID: 0}
     - target: {fileID: 2095990201, guid: f3e34b9506800764fb56f026e3e44361, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 9.1223286e-11
+      value: -9.1223286e-11
       objectReference: {fileID: 0}
     - target: {fileID: 3662055268885825496, guid: f3e34b9506800764fb56f026e3e44361, type: 3}
       propertyPath: m_RootOrder
