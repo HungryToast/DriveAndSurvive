@@ -13,13 +13,14 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float defaultStamina, defaultThirst, defaultHunger;
 
     [Header("Default Drain Stats")]
-    [SerializeField] private float defaultHungerDrain, defaultHealthDrain;
+    [SerializeField] private float defaultHungerDrain, defaultHealthDrain, defaultThirstDrain;
     
     [Header("Player Components")] 
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Animator playerAnimator;
 
     private bool drainHunger;
+    private bool drainThirst;
 
 
 //Awake
@@ -29,14 +30,14 @@ public class PlayerStats : MonoBehaviour
         playerAnimator = this.gameObject.GetComponent<Animator>();
     }
 
-    // Set Stats
+// Set Stats
     private void Start()
     {
         health = defaultHealth;
         stamina = defaultStamina;
         thirst = defaultThirst;
         hunger = defaultHunger;
-
+        drainThirst = true;
         drainHunger = true;
     }
 
@@ -112,7 +113,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        //Kill player when health is <= than 0
+//Kill player when health is <= than 0
         if (health <= 0)
         {
             Die();
@@ -120,17 +121,16 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        if(playerAnimator.GetBool("isRunning") && drainHunger)
-        {
-            DrainHunger(defaultHungerDrain * 2f);
-        }
-        else if(drainHunger)
+    { 
+        
+ // Hunger Drain
+        if(drainHunger)
         {
             DrainHunger(defaultHungerDrain);
-        }
+        } 
         
-
+        
+ // Stop hunger from going below 0
         if (hunger > 0)
         {
             drainHunger = true;
@@ -140,18 +140,27 @@ public class PlayerStats : MonoBehaviour
             drainHunger = false;
             hunger = 0;
         }
+        
+        
+// Health Drain if Starving
+        if (hunger <= 0)
+        {
+            DrainHealth(defaultHealthDrain);
+        }
 
-
+        
+// Stamina Drain
         if (!playerAnimator.GetBool("isRunning") && !playerAnimator.GetBool("isWalking") && hunger>0)
         {
             GainStamina(1f);
-            DrainHunger(0.08f);
         }
         else if (stamina > 0 && playerAnimator.GetBool("isRunning"))
         {
             DrainStamina(0.2f);
         }
         
+        
+// Stop player from running and attacking
         if (stamina <= 0)
         {
             playerController.SetCanUseStamina(false);
@@ -165,11 +174,17 @@ public class PlayerStats : MonoBehaviour
         {
             stamina = defaultStamina;
         }
-
-        if (hunger <= 0)
+// Drain Thirst
+        if (thirst > 0 && drainThirst)
         {
-            DrainHealth(defaultHealthDrain);
+            DrainThirst(defaultThirstDrain);
         }
+        else
+        {
+            drainThirst = false;
+            thirst = 0;
+        }
+
     }
 
     private void Die()

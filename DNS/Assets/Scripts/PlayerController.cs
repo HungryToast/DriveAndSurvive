@@ -36,14 +36,14 @@
         [SerializeField] private bool canMove, canAttack, canUseStamina;
 
         [SerializeField] private BoxCollider attackCol;
-        [SerializeField] private PlayerStats playerStats;
+       
         
 
 
 
         private void Awake()
         {
-            playerStats = GetComponent<PlayerStats>();
+           
             rb = this.GetComponent<Rigidbody>();
             inputsAsset = new Inputs();
             _animator = this.GetComponent<Animator>();
@@ -65,7 +65,6 @@
         {
             if(canAttack)
             {
-                playerStats.DrainStamina(10f);
                 transform.rotation =Quaternion.Slerp(transform.rotation,quaternion.LookRotation(GetCameraRight(playerCam),Vector3.up), 2);
                 _animator.SetTrigger("Attacking");
             }
