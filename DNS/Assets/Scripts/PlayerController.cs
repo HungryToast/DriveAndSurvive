@@ -1,6 +1,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Unity.Mathematics;
     using UnityEngine;
     using UnityEngine.InputSystem;
     using Object = System.Object;
@@ -61,7 +62,8 @@
         private void DoAttack(InputAction.CallbackContext obj)
         {
             if(canAttack)
-            { 
+            {
+                transform.rotation =Quaternion.Slerp(transform.rotation,quaternion.LookRotation(GetCameraRight(playerCam),Vector3.up), 2);
                 _animator.SetTrigger("Attacking");
             }
         }
@@ -70,6 +72,7 @@
         private void OnDisable()
         {
             inputsAsset.Player.Jump.started -= DoJump;
+            inputsAsset.Player.Attack.started -= DoAttack;
             inputsAsset.Player.Disable();
         }
 
@@ -117,8 +120,6 @@
             {
                 rb.velocity = horizontalVelocity.normalized * maxSpeed + Vector3.up * rb.velocity.y;
             }
-            
-            //stop animator from jumping
 
 
             IsFalling();
@@ -193,6 +194,7 @@
             }
         }
 
+        //attack animation events
         public void EnableMovement()
         {
             canMove = true;
@@ -208,7 +210,7 @@
         {
             attackCol.enabled = true;
             canMove = false;
-            canAttack = true;
+            canAttack = false;
         }
         
         
