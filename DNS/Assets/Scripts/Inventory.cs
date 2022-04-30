@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
         return water;
     }
 
-    public float SetWater(int gain)
+    public float SetWater(float gain)
     {
         return water += gain;
     }

@@ -10,11 +10,10 @@
     {
     //Code adapted from "3rd Person Controller - Unity's New Input System" by One Wheel Studio found at "https://www.youtube.com/watch?v=WIl6ysorTE0"
 
-        [Header("Input Field")] [SerializeField]
-        private Inputs inputsAsset;
-        [SerializeField] private InputAction move;
-        [SerializeField] private InputAction run;
-        [SerializeField] private InputAction attack;
+        [Header("Input Field")]
+        [SerializeField] private Inputs inputsAsset;
+        [SerializeField] private InputAction move,run,attack,use, gatherWater;
+        
 
         [Header("RigidBody")] 
         [SerializeField] private Rigidbody rb;
@@ -33,17 +32,16 @@
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip attackAnimation;
 
-        [SerializeField] private bool canMove, canAttack, canUseStamina;
+        [SerializeField] private bool canMove, canAttack, canUseStamina, canGatherWater;
 
         [SerializeField] private BoxCollider attackCol;
+        [SerializeField] private Inventory playerInventory;
        
         
-
-
-
         private void Awake()
-        {
-           playerCam = Camera.main;
+        { 
+            playerInventory = GetComponent<Inventory>(); 
+            playerCam = Camera.main;
             rb = this.GetComponent<Rigidbody>();
             inputsAsset = new Inputs();
             _animator = this.GetComponent<Animator>();
@@ -56,9 +54,35 @@
         {
             inputsAsset.Player.Jump.started += DoJump;
             inputsAsset.Player.Attack.started += DoAttack;
+            inputsAsset.Player.Pickup.started += PickUp;
             move = inputsAsset.Player.Move;
             run = inputsAsset.Player.Run;
+            gatherWater = inputsAsset.Player.Use;
             inputsAsset.Player.Enable();
+        }
+
+        private void PickUp(InputAction.CallbackContext obj)
+        {
+            
+            
+            if (canGatherWater && playerInventory.GetWater() < 100)
+            {
+                playerInventory.SetWater(100 - playerInventory.GetWater());
+            }
+            else if(!canGatherWater)
+            {
+                PickUpItem();
+            }
+        }
+
+        void PickUpItem()
+        {
+            print("Pick Up Item");
+        }
+        public void AtWaterSource(bool state)
+        {
+            canGatherWater = state;
+            
         }
 
         private void DoAttack(InputAction.CallbackContext obj)
@@ -220,6 +244,8 @@
             canUseStamina = state;
             canAttack = state;
         }
+        
+        
     }
 
 
