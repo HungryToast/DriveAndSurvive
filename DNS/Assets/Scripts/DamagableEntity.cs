@@ -50,6 +50,7 @@ public class DamagableEntity : MonoBehaviour
     public void TakeDamage(int damage)
     {
         healthPoints -= damage;
+        if(this.CompareTag("Animal")) this.GetComponent<EnemyAI>().BecomeHostile();
     }
 
     private void Update()

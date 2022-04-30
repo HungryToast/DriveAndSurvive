@@ -43,7 +43,7 @@
 
         private void Awake()
         {
-           
+           playerCam = Camera.main;
             rb = this.GetComponent<Rigidbody>();
             inputsAsset = new Inputs();
             _animator = this.GetComponent<Animator>();

@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float defaultStamina, defaultThirst, defaultHunger;
 
     [Header("Default Drain Stats")]
-    [SerializeField] private float defaultHungerDrain, defaultHealthDrain, defaultThirstDrain;
+    [SerializeField] private float defaultHungerDrain, defaultHealthDrain, defaultThirstDrain, defaultHealthRegen;
     
     [Header("Player Components")] 
     [SerializeField] private PlayerController playerController;
@@ -121,9 +121,15 @@ public class PlayerStats : MonoBehaviour
     }
 
     private void FixedUpdate()
-    { 
+    {
         
- // Hunger Drain
+        // Health Regen
+        if (hunger > 50)
+        {
+            GainHealth(defaultHealthRegen);
+        }
+
+        // Hunger Drain
         if(drainHunger)
         {
             DrainHunger(defaultHungerDrain);
@@ -149,8 +155,8 @@ public class PlayerStats : MonoBehaviour
         }
 
         
-// Stamina Drain
-        if (!playerAnimator.GetBool("isRunning") && !playerAnimator.GetBool("isWalking") && hunger>0)
+// Stamina 
+        if (!playerAnimator.GetBool("isRunning") && hunger>0)
         {
             GainStamina(1f);
         }
@@ -190,6 +196,6 @@ public class PlayerStats : MonoBehaviour
     private void Die()
     {
         playerAnimator.SetTrigger("Die");
-        Destroy(this.gameObject);
+        print("dead");
     }
 }
