@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour
         ToggleActionMap(inputActions.Player);
     }
 
-    public static void ToggleActionMap(InputActionMap actionMap)
+    public void ToggleActionMap(InputActionMap actionMap)
     {
         if (actionMap.enabled) 
             return;

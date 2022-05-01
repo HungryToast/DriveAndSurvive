@@ -64,9 +64,9 @@
         private void PickUp(InputAction.CallbackContext obj)
         {
             
-            
             if (canGatherWater && playerInventory.GetWater() < 100)
             {
+                _animator.SetTrigger("Pickup");
                 playerInventory.SetWater(100 - playerInventory.GetWater());
             }
             else if(!canGatherWater)
@@ -77,7 +77,7 @@
 
         void PickUpItem()
         {
-            print("Pick Up Item");
+            
         }
         public void AtWaterSource(bool state)
         {
