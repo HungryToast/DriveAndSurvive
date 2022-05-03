@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
     public static Inputs inputActions = new Inputs();
     public static event Action<InputActionMap> actionMapChange;
 
+   
+
     private void Start()
     {
         ToggleActionMap(inputActions.Player);
@@ -16,8 +18,7 @@ public class InputManager : MonoBehaviour
 
     public static void ToggleActionMap(InputActionMap actionMap)
     {
-        if (actionMap.enabled) 
-            return;
+        if (actionMap.enabled) return;
         
         inputActions.Disable();
         actionMapChange?.Invoke(actionMap);

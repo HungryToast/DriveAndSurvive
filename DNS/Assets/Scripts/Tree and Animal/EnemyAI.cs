@@ -57,7 +57,7 @@ public class EnemyAI : MonoBehaviour
             ChasePlayer();
         }
         
-        if(playerInSightRange && playerInAttackRange && isHostile) AttackPlayer();
+        if(playerInAttackRange && isHostile) AttackPlayer();
         
     }
 
