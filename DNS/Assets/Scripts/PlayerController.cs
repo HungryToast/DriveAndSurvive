@@ -57,13 +57,11 @@
             inputsAsset.Player.Pickup.started += PickUp;
             move = inputsAsset.Player.Move;
             run = inputsAsset.Player.Run;
-            gatherWater = inputsAsset.Player.Use;
             inputsAsset.Player.Enable();
         }
 
         private void PickUp(InputAction.CallbackContext obj)
         {
-            
             if (canGatherWater && playerInventory.GetWater() < 100)
             {
                 _animator.SetTrigger("Pickup");

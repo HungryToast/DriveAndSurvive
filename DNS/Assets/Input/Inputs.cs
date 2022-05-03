@@ -55,15 +55,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""26794820-8bd7-417d-a671-88154572dcef"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Pickup"",
                     ""type"": ""Button"",
                     ""id"": ""3cf757f0-7f05-483e-8130-0896c12376cc"",
@@ -189,17 +180,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0e53d67c-7280-406c-aa65-a64ecce8d8cc"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3e39dc81-91fd-4e9f-86a8-eaaf365e93b7"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
@@ -245,7 +225,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7758ee0c-5546-4c32-9311-1844b2a1b525"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -375,7 +355,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
@@ -448,7 +427,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Crouch;
-    private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Run;
@@ -461,7 +439,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Run => m_Wrapper.m_Player_Run;
@@ -485,9 +462,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
-                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Pickup.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickup;
                 @Pickup.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickup;
                 @Pickup.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickup;
@@ -516,9 +490,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
                 @Pickup.started += instance.OnPickup;
                 @Pickup.performed += instance.OnPickup;
                 @Pickup.canceled += instance.OnPickup;
@@ -592,7 +563,6 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);

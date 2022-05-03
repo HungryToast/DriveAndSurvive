@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "26794820-8bd7-417d-a671-88154572dcef",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Pickup",
                     "type": "Button",
                     "id": "3cf757f0-7f05-483e-8130-0896c12376cc",
@@ -167,17 +158,6 @@
                 },
                 {
                     "name": "",
-                    "id": "0e53d67c-7280-406c-aa65-a64ecce8d8cc",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3e39dc81-91fd-4e9f-86a8-eaaf365e93b7",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -223,7 +203,7 @@
                 {
                     "name": "",
                     "id": "7758ee0c-5546-4c32-9311-1844b2a1b525",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
