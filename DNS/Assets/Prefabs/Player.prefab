@@ -3170,7 +3170,10 @@ GameObject:
   - component: {fileID: 3662055268885825497}
   - component: {fileID: 1198629436}
   - component: {fileID: 1198629437}
-  m_Layer: 0
+  - component: {fileID: 345877690}
+  - component: {fileID: 345877696}
+  - component: {fileID: 345877698}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3243,10 +3246,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e7a07e7e-006c-4b5a-acab-a913b30e2783
     m_ActionName: Player/Crouch[/Keyboard/ctrl]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 26794820-8bd7-417d-a671-88154572dcef
-    m_ActionName: Player/Interact[/Keyboard/e]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 3cf757f0-7f05-483e-8130-0896c12376cc
@@ -3323,8 +3322,26 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  use:
+    m_Name: Use
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: bd64f5e4-729c-48da-8718-2bbe0fea561b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  gatherWater:
+    m_Name: Gather Water
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ea6afbb9-fa58-4633-a383-f787ca3f1940
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   rb: {fileID: 3662055268885825476}
-  movementForce: 2
+  movementForce: 1
   jumpForce: 15
   maxSpeed: 5
   playerCam: {fileID: 0}
@@ -3333,7 +3350,9 @@ MonoBehaviour:
   canMove: 0
   canAttack: 0
   canUseStamina: 0
+  canGatherWater: 0
   attackCol: {fileID: 1481284920000464998}
+  playerInventory: {fileID: 0}
 --- !u!54 &3662055268885825476
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3398,6 +3417,58 @@ MonoBehaviour:
   wood: 0
   food: 0
   water: 0
+--- !u!114 &345877690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662055268885825503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54baee98afea414d9ad9051907d47f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atExit: 0
+  canExit: 0
+--- !u!114 &345877696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662055268885825503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf1c2e0ec490e54086845a9a5505f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stamina: 0
+  thirst: 0
+  hunger: 0
+  health: 0
+  defaultHealth: 100
+  defaultStamina: 100
+  defaultThirst: 100
+  defaultHunger: 100
+  defaultHungerDrain: 0.002
+  defaultHealthDrain: 0.005
+  defaultThirstDrain: 0.001
+  defaultHealthRegen: 0.008
+  playerController: {fileID: 0}
+  playerAnimator: {fileID: 0}
+--- !u!114 &345877698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3662055268885825503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b0e4ec9103b5243bf65dbd873ed49d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3662055269055107069
 GameObject:
   m_ObjectHideFlags: 0

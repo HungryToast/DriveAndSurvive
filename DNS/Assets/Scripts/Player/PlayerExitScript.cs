@@ -20,11 +20,11 @@ public class PlayerExitScript : MonoBehaviour
     {
         inputAsset.Player.Use.started += Exit;
         inputAsset.Player.Enable();
+        inputAsset.Car.Disable();
     }
 
     private void Exit(InputAction.CallbackContext obj)
     {
-        print("Pressed Exit");
         if (atExit)
         {
             if (canExit)

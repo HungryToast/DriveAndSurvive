@@ -98,6 +98,33 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""fdcbb39a-c62c-4006-b4c2-c7c6b7cd5466"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Food"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1c531a1-b31b-4473-9a59-0238e05cdf25"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Water"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff96d8e3-be1e-4419-8914-4774fdd5418e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -232,6 +259,39 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""action"": ""Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4f41e68-2536-4ea6-983c-c3070db61a4d"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46d26dbb-a103-4b0d-afe7-db10d1211ce5"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Food"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""090daa62-00a9-4204-9644-c9dc76e37741"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Water"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -360,6 +420,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
+        m_Player_Weapon = m_Player.FindAction("Weapon", throwIfNotFound: true);
+        m_Player_Food = m_Player.FindAction("Food", throwIfNotFound: true);
+        m_Player_Water = m_Player.FindAction("Water", throwIfNotFound: true);
         // Car
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
         m_Car_Drive = m_Car.FindAction("Drive", throwIfNotFound: true);
@@ -432,6 +495,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Use;
+    private readonly InputAction m_Player_Weapon;
+    private readonly InputAction m_Player_Food;
+    private readonly InputAction m_Player_Water;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
@@ -444,6 +510,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Use => m_Wrapper.m_Player_Use;
+        public InputAction @Weapon => m_Wrapper.m_Player_Weapon;
+        public InputAction @Food => m_Wrapper.m_Player_Food;
+        public InputAction @Water => m_Wrapper.m_Player_Water;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -477,6 +546,15 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Use.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
                 @Use.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
                 @Use.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
+                @Weapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeapon;
+                @Weapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeapon;
+                @Weapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeapon;
+                @Food.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFood;
+                @Food.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFood;
+                @Food.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFood;
+                @Water.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWater;
+                @Water.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWater;
+                @Water.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWater;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -505,6 +583,15 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Use.started += instance.OnUse;
                 @Use.performed += instance.OnUse;
                 @Use.canceled += instance.OnUse;
+                @Weapon.started += instance.OnWeapon;
+                @Weapon.performed += instance.OnWeapon;
+                @Weapon.canceled += instance.OnWeapon;
+                @Food.started += instance.OnFood;
+                @Food.performed += instance.OnFood;
+                @Food.canceled += instance.OnFood;
+                @Water.started += instance.OnWater;
+                @Water.performed += instance.OnWater;
+                @Water.canceled += instance.OnWater;
             }
         }
     }
@@ -568,6 +655,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
+        void OnWeapon(InputAction.CallbackContext context);
+        void OnFood(InputAction.CallbackContext context);
+        void OnWater(InputAction.CallbackContext context);
     }
     public interface ICarActions
     {

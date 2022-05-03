@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 850551943663703752}
   - component: {fileID: 5390885402991292265}
   - component: {fileID: -805005260139965124}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tree
   m_TagString: Tree
   m_Icon: {fileID: 0}
@@ -61,8 +61,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.64
-  m_Height: 5.1
+  m_Radius: 1
+  m_Height: 5.1000004
   m_Direction: 1
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!136 &850551943663703752
@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 850551944517366356}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 3012921899041140897}
   - component: {fileID: 3012921899041943681}
   - component: {fileID: 3012921899042910785}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4,20 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InputMapChange : MonoBehaviour
 {
-    public static Inputs inputActions = new Inputs();
+    public static Inputs inputActions;
+
     public static event Action<InputActionMap> actionMapChange;
+
+    private void Awake()
+    {
+        inputActions = new Inputs();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
 
     private void Start()
     {
         ToggleActionMap(inputActions.Player);
     }
 
-    public void ToggleActionMap(InputActionMap actionMap)
+    public static void ToggleActionMap(InputActionMap actionMap)
     {
-        if (actionMap.enabled) 
-            return;
+        if (actionMap.enabled) return;
         
         inputActions.Disable();
         actionMapChange?.Invoke(actionMap);
