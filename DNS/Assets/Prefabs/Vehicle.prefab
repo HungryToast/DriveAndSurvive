@@ -2420,13 +2420,14 @@ MonoBehaviour:
   carCamera: {fileID: 907069294594679766}
   _playerController: {fileID: 0}
   torque: 0
-  maxTorque: 500
-  maxSteeringAngle: 0
-  criticalSpeed: 0
+  maxTorque: 800
+  maxSteeringAngle: 20
+  criticalSpeed: 1200
   steerAngle: 0
   breakPower: 0
   stepBelow: 5
   stepAbove: 1
+  wheelMesh: {fileID: 6939256749079646462, guid: d5e6136e9e7c29842a3f1e82c0d20a93, type: 3}
 --- !u!54 &3118218119971612379
 Rigidbody:
   m_ObjectHideFlags: 0
