@@ -12,7 +12,7 @@
 
         [Header("Input Field")]
         [SerializeField] private Inputs inputsAsset;
-        [SerializeField] private InputAction move,run,attack,use, gatherWater;
+        [SerializeField] private InputAction move,run;
         
 
         [Header("RigidBody")] 
@@ -32,32 +32,54 @@
         [SerializeField] private Animator _animator;
         [SerializeField] private AnimationClip attackAnimation;
 
-        [SerializeField] private bool canMove, canAttack, canUseStamina, canGatherWater;
+        [SerializeField] private bool canMove, canAttack, canUseStamina, canGatherWater, canEnterCar;
 
         [SerializeField] private BoxCollider attackCol;
         [SerializeField] private Inventory playerInventory;
+
+        [SerializeField] private GameObject playerCamera, carCamera;
+
+        [SerializeField] private CarController _carController;
        
         
         private void Awake()
         { 
-            playerInventory = GetComponent<Inventory>(); 
-            playerCam = Camera.main;
+            playerInventory = GetComponent<Inventory>();
             rb = this.GetComponent<Rigidbody>();
             inputsAsset = new Inputs();
             _animator = this.GetComponent<Animator>();
             canMove = true;
             attackCol.enabled = false;
             canAttack = true;
+            canEnterCar = false;
         }
 
         private void OnEnable()
         {
+            EnablePlayerControl();
+        }
+
+        public void EnablePlayerControl()
+        {
             inputsAsset.Player.Jump.started += DoJump;
             inputsAsset.Player.Attack.started += DoAttack;
             inputsAsset.Player.Pickup.started += PickUp;
+            inputsAsset.Player.Use.started += Interact;
             move = inputsAsset.Player.Move;
             run = inputsAsset.Player.Run;
             inputsAsset.Player.Enable();
+        }
+        
+
+        private void Interact(InputAction.CallbackContext obj)
+        {
+            if (canEnterCar)
+            {
+                playerCamera.SetActive(false);
+                carCamera.SetActive(true);
+                inputsAsset.Player.Disable();
+                _carController.EnableControl();
+            }
         }
 
         private void PickUp(InputAction.CallbackContext obj)
@@ -75,8 +97,9 @@
 
         void PickUpItem()
         {
-            
+            print("Item Pickup not implemented yet");
         }
+        
         public void AtWaterSource(bool state)
         {
             canGatherWater = state;
@@ -196,7 +219,7 @@
         {
             Ray ray = new Ray(this.transform.position + Vector3.up *0.25f, Vector3.down);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 0.3f))
+            if (Physics.Raycast(ray, out RaycastHit hit, 1f))
             {
                 return true;
             }
@@ -222,7 +245,6 @@
         public void EnableMovement()
         {
             canMove = true;
-            canAttack = true;
         }
 
         public void DisableAttack()
@@ -234,16 +256,22 @@
         {
             attackCol.enabled = true;
             canMove = false;
-            canAttack = false;
         }
 
         public void SetCanUseStamina(bool state)
         {
             canUseStamina = state;
+        }
+
+        public void CanAttackMethod(bool state)
+        {
             canAttack = state;
         }
-        
-        
+
+        public void CanEnterCar(bool state)
+        {
+            canEnterCar = state;
+        }
     }
 
 

@@ -309,7 +309,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Break"",
+                    ""name"": ""Brake"",
                     ""type"": ""Button"",
                     ""id"": ""dc34a03e-7e6f-4b3a-a9e4-1f09162d3fac"",
                     ""expectedControlType"": ""Button"",
@@ -390,7 +390,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Break"",
+                    ""action"": ""Brake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -426,7 +426,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         // Car
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
         m_Car_Drive = m_Car.FindAction("Drive", throwIfNotFound: true);
-        m_Car_Break = m_Car.FindAction("Break", throwIfNotFound: true);
+        m_Car_Brake = m_Car.FindAction("Brake", throwIfNotFound: true);
         m_Car_Exit = m_Car.FindAction("Exit", throwIfNotFound: true);
     }
 
@@ -601,14 +601,14 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Car;
     private ICarActions m_CarActionsCallbackInterface;
     private readonly InputAction m_Car_Drive;
-    private readonly InputAction m_Car_Break;
+    private readonly InputAction m_Car_Brake;
     private readonly InputAction m_Car_Exit;
     public struct CarActions
     {
         private @Inputs m_Wrapper;
         public CarActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Drive => m_Wrapper.m_Car_Drive;
-        public InputAction @Break => m_Wrapper.m_Car_Break;
+        public InputAction @Brake => m_Wrapper.m_Car_Brake;
         public InputAction @Exit => m_Wrapper.m_Car_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Car; }
         public void Enable() { Get().Enable(); }
@@ -622,9 +622,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Drive.started -= m_Wrapper.m_CarActionsCallbackInterface.OnDrive;
                 @Drive.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnDrive;
                 @Drive.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnDrive;
-                @Break.started -= m_Wrapper.m_CarActionsCallbackInterface.OnBreak;
-                @Break.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnBreak;
-                @Break.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnBreak;
+                @Brake.started -= m_Wrapper.m_CarActionsCallbackInterface.OnBrake;
+                @Brake.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnBrake;
+                @Brake.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnBrake;
                 @Exit.started -= m_Wrapper.m_CarActionsCallbackInterface.OnExit;
                 @Exit.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnExit;
                 @Exit.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnExit;
@@ -635,9 +635,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Drive.started += instance.OnDrive;
                 @Drive.performed += instance.OnDrive;
                 @Drive.canceled += instance.OnDrive;
-                @Break.started += instance.OnBreak;
-                @Break.performed += instance.OnBreak;
-                @Break.canceled += instance.OnBreak;
+                @Brake.started += instance.OnBrake;
+                @Brake.performed += instance.OnBrake;
+                @Brake.canceled += instance.OnBrake;
                 @Exit.started += instance.OnExit;
                 @Exit.performed += instance.OnExit;
                 @Exit.canceled += instance.OnExit;
@@ -662,7 +662,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     public interface ICarActions
     {
         void OnDrive(InputAction.CallbackContext context);
-        void OnBreak(InputAction.CallbackContext context);
+        void OnBrake(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
     }
 }

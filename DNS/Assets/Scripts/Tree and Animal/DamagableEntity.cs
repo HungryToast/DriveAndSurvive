@@ -21,12 +21,12 @@ public class DamagableEntity : MonoBehaviour
 
     private void Start()
     {
-        if (this.gameObject.CompareTag("Tree"));
+        if (gameObject.CompareTag("Tree"));
         {
             healthPoints = 20;
         }
 
-        if (this.gameObject.CompareTag("Animal"))
+        if (gameObject.CompareTag("Animal"))
         {
             healthPoints = 20;
         }
@@ -36,12 +36,12 @@ public class DamagableEntity : MonoBehaviour
 
     private void OnEnable()
     {
-        if(this.CompareTag("Tree"))
+        if(CompareTag("Tree"))
         {
             dropGain = UnityEngine.Random.Range(1, 5);
         }
 
-        if (this.CompareTag("Animal"))
+        if (CompareTag("Animal"))
         {
             dropGain = UnityEngine.Random.Range(1, 10);
         }
@@ -50,7 +50,7 @@ public class DamagableEntity : MonoBehaviour
     public void TakeDamage(int damage)
     {
         healthPoints -= damage;
-        if(this.CompareTag("Animal")) this.GetComponent<EnemyAI>().BecomeHostile();
+        if(CompareTag("Animal")) GetComponent<EnemyAI>().BecomeHostile();
     }
 
     private void Update()
@@ -58,7 +58,7 @@ public class DamagableEntity : MonoBehaviour
         // Kill
         if (healthPoints <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             Drop();
         }
     }
