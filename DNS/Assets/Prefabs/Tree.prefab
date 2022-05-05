@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 850551943663703752}
   - component: {fileID: 5390885402991292265}
   - component: {fileID: -805005260139965124}
+  - component: {fileID: 8385420398962860939}
   m_Layer: 8
   m_Name: Tree
   m_TagString: Tree
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 850551943663703764}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 850551944517366356}
   m_Father: {fileID: 0}
@@ -101,7 +102,7 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3012921899042910785}
-  - screenRelativeHeight: 0.1
+  - screenRelativeHeight: 0
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3012921899042910785}
@@ -122,6 +123,18 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &8385420398962860939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850551943663703764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 465110e7c75407847bf65bae844a7973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &850551944517366355
 GameObject:
   m_ObjectHideFlags: 0

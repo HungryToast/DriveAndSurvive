@@ -1166,7 +1166,7 @@ GameObject:
   - component: {fileID: 930049221}
   - component: {fileID: 930049220}
   m_Layer: 0
-  m_Name: wew (1)
+  m_Name: PlayerLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,9 +1183,9 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0.8391533, a: 1}
+  m_Color: {r: 1, g: 0.6556604, b: 0.9446356, a: 1}
   m_Intensity: 300
-  m_Range: 25.03151
+  m_Range: 59
   m_SpotAngle: 120.26565
   m_InnerSpotAngle: 120.26565
   m_CookieSize: 10
@@ -1806,7 +1806,7 @@ GameObject:
   - component: {fileID: 1478777628}
   - component: {fileID: 1478777627}
   m_Layer: 0
-  m_Name: wew
+  m_Name: Tree Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
