@@ -4,6 +4,7 @@
     using Unity.Mathematics;
     using UnityEngine;
     using UnityEngine.InputSystem;
+    using UnityEngine.SceneManagement;
     using Object = System.Object;
 
     public class PlayerController : MonoBehaviour

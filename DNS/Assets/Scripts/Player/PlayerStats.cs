@@ -21,9 +21,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
 
     [SerializeField] private Slider healthBar, staminaBar, hungerBar, thirstBar;
+    [SerializeField] private Canvas endScreen, playerUI;
 
     private bool drainHunger;
     private bool drainThirst;
+    private bool isDead;
 
 
 //Awake
@@ -42,6 +44,7 @@ public class PlayerStats : MonoBehaviour
         hunger = defaultHunger;
         drainThirst = true;
         drainHunger = true;
+        isDead = false;
     }
 
 
@@ -117,9 +120,10 @@ public class PlayerStats : MonoBehaviour
     private void Update()
     {
 //Kill player when health is <= than 0
-        if (health <= 0)
+        if (health <= 0 && !isDead)
         {
             Die();
+            isDead = true;
         }
     }
 
@@ -208,6 +212,14 @@ public class PlayerStats : MonoBehaviour
     private void Die()
     {
         playerAnimator.SetTrigger("Die");
-        print("dead");
+    }
+
+    public void GoToGameOver()
+    {
+        playerUI.gameObject.SetActive(false);
+        endScreen.gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
     }
 }
