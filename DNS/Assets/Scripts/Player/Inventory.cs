@@ -1,15 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
     private Inputs inputAsset;
 
     [SerializeField] GameObject axe, foodObject, waterObject;
+    [SerializeField] private TMP_Text waterUI, foodUI, woodUI;
     
     private PlayerController _playerController;
     private PlayerStats _playerStats;
@@ -17,6 +20,13 @@ public class Inventory : MonoBehaviour
     [SerializeField] int wood;
     [SerializeField] int food;
     [SerializeField] float water;
+
+    private void FixedUpdate()
+    {
+        woodUI.text = "Wood X" + wood;
+        waterUI.text = "Water X" + water;
+        foodUI.text = "Food X" + food;
+    }
 
     private void OnEnable()
     {

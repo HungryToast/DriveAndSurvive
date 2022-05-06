@@ -93,6 +93,12 @@
             {
                 PickUpItem();
             }
+
+            if (canEnterCar)
+            {
+                _carController.StopCar();
+                _carController.gameObject.transform.SetPositionAndRotation(_carController.gameObject.transform.position, Quaternion.Euler(Vector3.zero));
+            }
         }
 
         void PickUpItem()
@@ -272,6 +278,8 @@
         {
             canEnterCar = state;
         }
+        
+        
     }
 
 

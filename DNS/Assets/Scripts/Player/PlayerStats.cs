@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PlayerStats : MonoBehaviour
     [Header("Player Components")] 
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Animator playerAnimator;
+
+    [SerializeField] private Slider healthBar, staminaBar, hungerBar, thirstBar;
 
     private bool drainHunger;
     private bool drainThirst;
@@ -191,6 +194,15 @@ public class PlayerStats : MonoBehaviour
             thirst = 0;
         }
 
+        //UI Values
+
+        healthBar.value = health;
+        staminaBar.value = stamina;
+
+        hungerBar.value = hunger;
+        thirstBar.value = thirst;
+        
+        
     }
 
     private void Die()
