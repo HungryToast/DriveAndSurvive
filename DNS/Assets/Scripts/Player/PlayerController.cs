@@ -1,11 +1,6 @@
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Unity.Mathematics;
+using Unity.Mathematics;
     using UnityEngine;
     using UnityEngine.InputSystem;
-    using UnityEngine.SceneManagement;
-    using Object = System.Object;
 
     public class PlayerController : MonoBehaviour
     {
@@ -41,6 +36,8 @@
         [SerializeField] private GameObject playerCamera, carCamera;
 
         [SerializeField] private CarController _carController;
+
+        [SerializeField] private EscapeMenu _escapeMenu;
        
         
         private void Awake()
@@ -54,7 +51,8 @@
             canAttack = true;
             canEnterCar = false;
         }
-
+        
+        
         private void OnEnable()
         {
             EnablePlayerControl();
@@ -66,11 +64,17 @@
             inputsAsset.Player.Attack.started += DoAttack;
             inputsAsset.Player.Pickup.started += PickUp;
             inputsAsset.Player.Use.started += Interact;
+            inputsAsset.Player.Esc.started += OpenEscapeMenu;
             move = inputsAsset.Player.Move;
             run = inputsAsset.Player.Run;
             inputsAsset.Player.Enable();
         }
-        
+
+        private void OpenEscapeMenu(InputAction.CallbackContext obj)
+        {
+            _escapeMenu.ToggleEscapeMenu();
+        }
+
 
         private void Interact(InputAction.CallbackContext obj)
         {

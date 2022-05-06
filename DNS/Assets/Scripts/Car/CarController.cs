@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +14,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private int stepBelow, stepAbove;
     
     [SerializeField] private GameObject wheelMesh;
+
+    [SerializeField] private EscapeMenu _escapeMenu;
 
     
 
@@ -38,6 +36,12 @@ public class CarController : MonoBehaviour
         brake = inputAsset.Car.Brake;
         wheelMesh.SetActive(false);
         inputAsset.Car.Exit.started += ExitCar;
+        inputAsset.Car.Esc.started += OpenEscapeMenu;
+    }
+
+    private void OpenEscapeMenu(InputAction.CallbackContext obj)
+    {
+        _escapeMenu.ToggleEscapeMenu();
     }
 
     private void Start()

@@ -21,6 +21,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] int food;
     [SerializeField] float water;
 
+    
     private void FixedUpdate()
     {
         woodUI.text = "Wood X" + wood;

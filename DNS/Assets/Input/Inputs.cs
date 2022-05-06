@@ -125,6 +125,15 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""cbfc64c1-bb87-4dbd-99ee-b16bbc6fccbc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -292,6 +301,17 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""action"": ""Water"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c9587fa-e664-463a-96c9-66455de8828e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -321,6 +341,15 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""9fbd3258-7cc8-4fc1-b6be-e67c2148d2d3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""da0c55c7-b5ca-4fbd-a8c7-de5e955e85b6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -404,6 +433,17 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                     ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13c90971-e864-4bc6-bfd5-5f59d741fb33"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -423,11 +463,13 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         m_Player_Weapon = m_Player.FindAction("Weapon", throwIfNotFound: true);
         m_Player_Food = m_Player.FindAction("Food", throwIfNotFound: true);
         m_Player_Water = m_Player.FindAction("Water", throwIfNotFound: true);
+        m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
         // Car
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
         m_Car_Drive = m_Car.FindAction("Drive", throwIfNotFound: true);
         m_Car_Brake = m_Car.FindAction("Brake", throwIfNotFound: true);
         m_Car_Exit = m_Car.FindAction("Exit", throwIfNotFound: true);
+        m_Car_Esc = m_Car.FindAction("Esc", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -498,6 +540,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Weapon;
     private readonly InputAction m_Player_Food;
     private readonly InputAction m_Player_Water;
+    private readonly InputAction m_Player_Esc;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
@@ -513,6 +556,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         public InputAction @Weapon => m_Wrapper.m_Player_Weapon;
         public InputAction @Food => m_Wrapper.m_Player_Food;
         public InputAction @Water => m_Wrapper.m_Player_Water;
+        public InputAction @Esc => m_Wrapper.m_Player_Esc;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -555,6 +599,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Water.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWater;
                 @Water.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWater;
                 @Water.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWater;
+                @Esc.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                @Esc.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                @Esc.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -592,6 +639,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Water.started += instance.OnWater;
                 @Water.performed += instance.OnWater;
                 @Water.canceled += instance.OnWater;
+                @Esc.started += instance.OnEsc;
+                @Esc.performed += instance.OnEsc;
+                @Esc.canceled += instance.OnEsc;
             }
         }
     }
@@ -603,6 +653,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Car_Drive;
     private readonly InputAction m_Car_Brake;
     private readonly InputAction m_Car_Exit;
+    private readonly InputAction m_Car_Esc;
     public struct CarActions
     {
         private @Inputs m_Wrapper;
@@ -610,6 +661,7 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         public InputAction @Drive => m_Wrapper.m_Car_Drive;
         public InputAction @Brake => m_Wrapper.m_Car_Brake;
         public InputAction @Exit => m_Wrapper.m_Car_Exit;
+        public InputAction @Esc => m_Wrapper.m_Car_Esc;
         public InputActionMap Get() { return m_Wrapper.m_Car; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -628,6 +680,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Exit.started -= m_Wrapper.m_CarActionsCallbackInterface.OnExit;
                 @Exit.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnExit;
                 @Exit.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnExit;
+                @Esc.started -= m_Wrapper.m_CarActionsCallbackInterface.OnEsc;
+                @Esc.performed -= m_Wrapper.m_CarActionsCallbackInterface.OnEsc;
+                @Esc.canceled -= m_Wrapper.m_CarActionsCallbackInterface.OnEsc;
             }
             m_Wrapper.m_CarActionsCallbackInterface = instance;
             if (instance != null)
@@ -641,6 +696,9 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
                 @Exit.started += instance.OnExit;
                 @Exit.performed += instance.OnExit;
                 @Exit.canceled += instance.OnExit;
+                @Esc.started += instance.OnEsc;
+                @Esc.performed += instance.OnEsc;
+                @Esc.canceled += instance.OnEsc;
             }
         }
     }
@@ -658,11 +716,13 @@ public partial class @Inputs : IInputActionCollection2, IDisposable
         void OnWeapon(InputAction.CallbackContext context);
         void OnFood(InputAction.CallbackContext context);
         void OnWater(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
     public interface ICarActions
     {
         void OnDrive(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
 }
