@@ -27,6 +27,8 @@ public class CarController : MonoBehaviour
         playerCamera.SetActive(true);
         inputAsset.Car.Disable();
         _playerController.EnablePlayerControl();
+        GetComponent<PlayerExitandEnterCar>().ToggleEnterExit();
+        GetComponent<PlayerExitandEnterCar>().SpawnPlayerNextToCar();
     }
 
     public void EnableControl()

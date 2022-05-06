@@ -80,6 +80,7 @@
                 carCamera.SetActive(true);
                 inputsAsset.Player.Disable();
                 _carController.EnableControl();
+                GetComponent<PlayerExitandEnterCar>().ToggleEnterExit();
             }
         }
 
