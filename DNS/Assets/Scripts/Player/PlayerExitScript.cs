@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerExitScript : MonoBehaviour
 {
     [SerializeField] Inputs inputAsset;
     [SerializeField] bool atExit, canExit;
+    [SerializeField] private Canvas _endScreen, playerUI;
 
     private void Awake()
     {
@@ -29,11 +31,10 @@ public class PlayerExitScript : MonoBehaviour
         {
             if (canExit)
             {
-                print("Game Over");
-            }
-            else if(!canExit)
-            {
-                print("You dont have the necessary materials to leave");
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                playerUI.gameObject.SetActive(false);
+                _endScreen.gameObject.SetActive(true);
             }
         }
     }
@@ -41,12 +42,10 @@ public class PlayerExitScript : MonoBehaviour
     public void AtExit(bool state)
     {
         atExit = state;
-        print("player at exit");
     }
 
     public void CanExit(bool state)
     {
         canExit = state;
-        print("player can exit");
     }
 }
