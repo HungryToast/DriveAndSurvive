@@ -19,7 +19,7 @@ public class ExitScript : MonoBehaviour
         {
             other.gameObject.GetComponent<PlayerExitScript>().AtExit(true);
             playerInventory = other.gameObject.GetComponent<Inventory>();
-            if (playerInventory.GetWood() == woodReq && playerInventory.GetWater() == waterReq && playerInventory.GetFood() == foodReq)
+            if (playerInventory.GetWood() >= woodReq && playerInventory.GetWater() >= waterReq && playerInventory.GetFood() >= foodReq)
             {
                 other.gameObject.GetComponent<PlayerExitScript>().CanExit(true);
                 print("Requirements Met");
